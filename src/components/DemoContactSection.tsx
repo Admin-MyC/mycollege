@@ -60,6 +60,7 @@ export const DemoContactSection: React.FC<DemoContactSectionProps> = ({ content,
     setError(null);
 
     try {
+      // 1. Guardar solicitud en Firestore (persistencia asegurada)
       await submitDemoRequest({
         schoolName: formData.schoolName,
         contactName: formData.contactName,
@@ -72,6 +73,31 @@ export const DemoContactSection: React.FC<DemoContactSectionProps> = ({ content,
         preferredTime: formData.preferredTime,
         message: formData.message
       });
+
+      // 2. Disparar notificación por correo a contacto@mycollege.com.mx vía endpoint con Gmail
+      try {
+        await fetch('/api/send-webinar', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            schoolName: formData.schoolName,
+            contactName: formData.contactName,
+            email: formData.email,
+            phone: formData.phone,
+            studentCount: formData.studentCount,
+            currentSystem: formData.currentSystem,
+            webinarTopic: formData.webinarTopic,
+            preferredDate: formData.preferredDate,
+            preferredTime: formData.preferredTime,
+            message: formData.message
+          }),
+        });
+      } catch (mailErr) {
+        console.warn('Nota: No se pudo enviar el correo de notificación inmediata:', mailErr);
+      }
+
       setSubmitted(true);
     } catch (err: any) {
       console.error('Error submitting webinar request to Firestore:', err);
