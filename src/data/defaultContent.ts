@@ -2,7 +2,7 @@ import { SiteContent, PlatformProduct, PlatformUpdate, PrivacyPolicyContent } fr
 
 export const defaultSiteContent: SiteContent = {
   heroBadge: 'Tecnología Integral para la Educación de Élite',
-  heroTitle: 'La Plataforma Definitiva para la Gestión de Colegios Privados',
+  heroTitle: 'La Plataforma Definitiva para la Gestión de Colegios',
   heroSubtitle: 'Unificamos control escolar, cobranza y facturación electrónica, app para padres y planeación docente en un solo ecosistema elegante, seguro y de alto prestigio.',
   aboutTitle: 'Quiénes Somos',
   aboutSummary: 'My College nació con la convicción de que los colegios privados de excelencia merecen herramientas tecnológicas a la altura de sus estándares pedagógicos y administrativos.',
