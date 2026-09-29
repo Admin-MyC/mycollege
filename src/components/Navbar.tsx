@@ -67,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </span>
         <span className="hidden md:inline">•</span>
         <span className="hidden md:inline font-semibold">
-          Plataforma Integral de Gestión para Colegios Privados
+          Plataforma Integral de Gestión para Colegios
         </span>
         <span 
           onClick={onTriggerSecretAdmin}

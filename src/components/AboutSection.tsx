@@ -62,7 +62,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ content, textAlign }
               </div>
 
               <h3 className={`text-xl font-bold font-serif ${isLight ? 'text-[#081D3C]' : 'text-white'}`}>
-                Diseñado Exclusivamente para Colegios Privados
+                Diseñado Exclusivamente para Colegios
               </h3>
 
               <p className={`text-xs sm:text-sm mt-3 leading-relaxed ${isLight ? 'text-[#081D3C]/75' : 'text-white/80'}`}>
