@@ -171,9 +171,28 @@ function escapeHtml(text?: string): string {
 }
 
 export async function sendWebinarEmail(payload: WebinarEmailPayload): Promise<{ success: boolean; message: string; simulated?: boolean }> {
-  const gmailUser = (process.env.GMAIL_USER || 'contacto@mycollege.com.mx').trim();
+  // En Google Workspace / Gmail:
+  // auth.user DEBE ser la cuenta principal con la que se generó la contraseña de aplicación:
+  // por ejemplo: armando.villanueva@mycollege.com.mx
+  const authUser = (
+    process.env.GMAIL_AUTH_USER ||
+    process.env.GMAIL_USER ||
+    'armando.villanueva@mycollege.com.mx'
+  ).trim();
+
   const gmailPass = (process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '');
-  const recipient = (process.env.CONTACT_RECIPIENT_EMAIL || 'contacto@mycollege.com.mx').trim();
+
+  // Dirección remitente visible (puede ser el alias institucional como contacto@mycollege.com.mx)
+  const fromEmail = (
+    process.env.GMAIL_FROM ||
+    'contacto@mycollege.com.mx'
+  ).trim();
+
+  // Destinatarios: por defecto enviamos a contacto@mycollege.com.mx y a armando.villanueva@mycollege.com.mx
+  const recipient = (
+    process.env.CONTACT_RECIPIENT_EMAIL ||
+    'contacto@mycollege.com.mx, armando.villanueva@mycollege.com.mx'
+  ).trim();
 
   // If credentials are not configured yet, log and inform the caller
   if (!gmailPass) {
@@ -186,9 +205,11 @@ export async function sendWebinarEmail(payload: WebinarEmailPayload): Promise<{ 
   }
 
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
-      user: gmailUser,
+      user: authUser,
       pass: gmailPass
     }
   });
@@ -211,7 +232,7 @@ Mensaje: ${payload.message || 'Sin mensaje'}
 
   try {
     const info = await transporter.sendMail({
-      from: `"My College Web" <${gmailUser}>`,
+      from: `"My College Web" <${fromEmail}>`,
       to: recipient,
       replyTo: payload.email,
       subject: subject,
@@ -222,13 +243,17 @@ Mensaje: ${payload.message || 'Sin mensaje'}
     console.log('[Webinar Email] Correo enviado exitosamente:', info.messageId);
     return {
       success: true,
-      message: 'Correo de notificación enviado exitosamente a ' + recipient
+      message: `Correo de notificación enviado exitosamente a ${recipient} desde ${authUser}`
     };
   } catch (error: any) {
     console.error('[Webinar Email Error]:', error);
+    let detail = error?.message || 'Error desconocido';
+    if (detail.includes('535') || detail.includes('Username and Password not accepted')) {
+      detail += '. Verifica que GMAIL_USER sea tu correo principal de inicio de sesión (armando.villanueva@mycollege.com.mx) y que la contraseña de aplicación sea de 16 caracteres generada para esa cuenta.';
+    }
     return {
       success: false,
-      message: `Error al enviar correo vía Gmail: ${error?.message || 'Error desconocido'}`
+      message: `Error al enviar correo vía Gmail: ${detail}`
     };
   }
 }
