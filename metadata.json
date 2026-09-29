@@ -1,0 +1,6 @@
+{
+  "name": "My College - Plataforma de Gestión para Colegios Privados",
+  "description": "Plataforma integral para la gestión escolar, académica, financiera y comunicativa de colegios privados de alto nivel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

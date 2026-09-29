@@ -1,0 +1,75 @@
+{
+  "entities": {
+    "site_content": {
+      "title": "Site Content",
+      "description": "General institutional content including Mission, Vision, Objectives, and Privacy Policy",
+      "type": "object",
+      "properties": {
+        "mission": { "type": "string", "description": "Institutional mission statement" },
+        "vision": { "type": "string", "description": "Institutional vision statement" },
+        "objectives": { "type": "array", "description": "Core strategic and operational objectives" },
+        "aboutUs": { "type": "string", "description": "About My College overview" },
+        "heroTitle": { "type": "string", "description": "Hero header title" },
+        "heroSubtitle": { "type": "string", "description": "Hero header description" },
+        "contactEmail": { "type": "string", "description": "Official contact email" },
+        "contactPhone": { "type": "string", "description": "Contact telephone number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["mission", "vision"]
+    },
+    "updates": {
+      "title": "Platform Updates",
+      "description": "News, feature releases, and announcements for My College platform",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Update headline" },
+        "summary": { "type": "string", "description": "Brief summary snippet" },
+        "content": { "type": "string", "description": "Full markdown or text body" },
+        "category": { "type": "string", "description": "Category tag (e.g. Innovación, Académico, Finanzas, App)" },
+        "date": { "type": "string", "description": "Display date" },
+        "badge": { "type": "string", "description": "Optional pill tag" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "summary", "category"]
+    },
+    "products": {
+      "title": "Products and Modules",
+      "description": "Software modules offered by My College platform",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Module name" },
+        "tagline": { "type": "string", "description": "Short tagline" },
+        "description": { "type": "string", "description": "Detailed explanation of the module" },
+        "icon": { "type": "string", "description": "Lucide icon identifier" },
+        "features": { "type": "array", "description": "List of key features" },
+        "targetAudience": { "type": "string", "description": "Who uses this module" },
+        "badge": { "type": "string", "description": "Highlight badge (e.g. Recomendado, CFDI 4.0)" }
+      },
+      "required": ["name", "description"]
+    },
+    "demo_requests": {
+      "title": "Demo Requests",
+      "description": "School demonstration inquiries submitted via the promotional site",
+      "type": "object",
+      "properties": {
+        "schoolName": { "type": "string", "description": "Name of the private school" },
+        "contactName": { "type": "string", "description": "Person responsible" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "studentCount": { "type": "string", "description": "Approximate number of students" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["schoolName", "contactName", "email"]
+    },
+    "page_settings": {
+      "title": "Page Settings",
+      "description": "Selected visual style, layout variant, and color accents",
+      "type": "object",
+      "properties": {
+        "activeDesign": { "type": "string", "description": "Selected design theme: prestige, modern, minimal, impact" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}
